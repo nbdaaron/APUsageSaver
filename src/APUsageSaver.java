@@ -36,7 +36,7 @@ public class APUsageSaver {
 		 
 		 FileReader s;
 		try {
-			s = new FileReader("C:\\Users\\Aaron\\Desktop\\AP_DATASET\\NORMAL_5X5\\NA.json");
+			s = new FileReader("C:\\Users\\Aaron\\Desktop\\AP_DATASET\\NORMAL_5X5\\EUW.json");
 		
          JSONArray gameList = (JSONArray) parser.parse(s);
 		
@@ -48,7 +48,7 @@ public class APUsageSaver {
 
 	         
 	         //START OF WHERE MATCH DATA IS DRAWN                                                MATCH ID SELECTION
-	         URL matchurl = new URL("https://na.api.pvp.net/api/lol/na/v2.2/match/" + gameList.get(counter).toString() + "?api_key=bbc7c25e-06d9-4806-8d1d-02bcd54d05ff");
+	         URL matchurl = new URL("https://euw.api.pvp.net/api/lol/euw/v2.2/match/" + gameList.get(counter).toString() + "?api_key=6c1f7b39-81e8-4ad9-b58f-2597012a9704");
 	         BufferedReader reader = new BufferedReader(new InputStreamReader(matchurl.openStream()));
 	         StringBuffer buffer = new StringBuffer();
 	         int read;
@@ -81,8 +81,9 @@ public class APUsageSaver {
 	         }
 	         
 	         Game game = new Game((String) match.get("region"), "NORMAL", bchampions, rchampions, ((Boolean)((JSONObject)((JSONObject)((JSONArray)match.get("participants")).get(0)).get("stats")).get("winner")).booleanValue() );
-	         System.out.println(game);
+	         System.out.print(counter+"/" +gameList.size()+": "); System.out.println(game);
 	         arr.add(game);
+	         write("array.txt", arr);
 	         
 	       // for (Object x : gameList) {
 	       // 	System.out.println(x);
@@ -102,14 +103,13 @@ public class APUsageSaver {
 			e.printStackTrace();
 		}
 	      
-			Thread.sleep(2000);
 			
 			
 		 } //END OF LOOP
 		 
 		 
 		 
-		  write("array.txt", arr);
+		  
 		  
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
@@ -119,10 +119,7 @@ public class APUsageSaver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e1) {
+		catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
